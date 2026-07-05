@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta><link rel="stylesheet" type="text/css" href="__STYLE__"></link></head><body>
+<div style="overflow-wrap: break-word; margin: 16px 0px;" data-sfc-cp="" jsaction="" jscontroller="xUgpab#A1M9vc" data-sfc-root="ep" jsuid="PQMBnd_0" data-sfc-cb="">Да, это действительно досадная ситуация. Простите за путаницу: у самого объекта <code dir="ltr" style="background-color: #f4f6f7; border: 1px solid #f4f6f7; border-radius: 4px; padding: 2px 4px;" jsaction="" jscontroller="jM7ape#mDCHfd" data-sfc-root="ep" jsuid="PQMBnd_1" data-sfc-cb="">ФорматированныйДокумент<!--TgQPHd||[]--></code> в 1С действительно <span style="font-weight: bold;" data-sfc-cp="" jsaction="" jscontroller="cjmLxf#dPtwvc" data-sfc-root="ep" jsuid="PQMBnd_2" data-sfc-cb="">нет метода <code dir="ltr" style="background-color: #f4f6f7; border: 1px solid #f4f6f7; border-radius: 4px; padding: 2px 4px;" jsaction="" jscontroller="jM7ape#mDCHfd" data-sfc-root="ep" jsuid="PQMBnd_3" data-sfc-cb="">УстановитьТекст()<!--TgQPHd||[]--></code><!--TgQPHd||[]--></span>. Из-за этого платформа и ругается. Он умеет принимать чистый текст только через обходной путь.<span jsaction="" jscontroller="gWOIub#gnsrYb" data-sfc-root="ep" jsuid="PQMBnd_4" data-sfc-cb=""> [1, 2] <!--TgQPHd||[]--></span><!--TgQPHd||[]--></div>
+<div style="overflow-wrap: break-word; margin: 16px 0px;" data-sfc-cp="" jsaction="" jscontroller="xUgpab#A1M9vc" data-sfc-root="ep" jsuid="PQMBnd_5" data-sfc-cb="">Поскольку вы хотите работать <span style="font-weight: bold;" data-sfc-cp="" jsaction="" jscontroller="cjmLxf#dPtwvc" data-sfc-root="ep" jsuid="PQMBnd_6" data-sfc-cb="">без HTML<!--TgQPHd||[]--></span>, вот гарантированно рабочий и правильный способ передать обычную строку в форматированный документ.<!--TgQPHd||[]--></div>
+<h2 style="font-size: 20px;" role="heading" data-sfc-cp="" jsaction="" jscontroller="gjwZNd#ZxCkTb" data-sfc-root="ep" jsuid="PQMBnd_7" data-sfc-cb="">Рабочий код (исправленный)<!--TgQPHd||[]--></h2>
+<div style="overflow-wrap: break-word; margin: 16px 0px;" data-sfc-cp="" jsaction="" jscontroller="xUgpab#A1M9vc" data-sfc-root="ep" jsuid="PQMBnd_8" data-sfc-cb="">Замените весь код внутри процедуры на этот:<!--TgQPHd||[]--></div>
+<div style="background-color: #f4f6f7; padding: 16px; display: flex; gap: 16px; overflow-x: auto" dir="ltr" jsaction="" jscontroller="rxoZB#M4fm4d" data-sfc-root="ep" jsuid="PQMBnd_9" data-sfc-cb=""><pre style="margin-top: 0px; margin-bottom: 0px;"><code class="language-bsl">&amp;НаСервере
+Процедура ПриСозданииНаСервере(Отказ, СтандартнаяОбработка)
+	// 1. Создаем пустой форматированный документ
+	ВременныйДокумент = Новый ФорматированныйДокумент;
+	
+	// 2. Превращаем обычный текст в форматированную строку (объект 1С)
+	// Метод Добавить() создаст правильный элемент внутри документа
+	ВременныйДокумент.Добавить("Ваш обычный текст для обработки");
+	
+	// 3. Переносим готовый документ в реквизит формы
+	ЗначениеВРеквизитФормы(ВременныйДокумент, "ТекстЗаметки");
+КонецПроцедуры
+</code></pre><!--TgQPHd||[]--></div>
+<h2 style="font-size: 20px;" role="heading" data-sfc-cp="" jsaction="" jscontroller="gjwZNd#ZxCkTb" data-sfc-root="ep" jsuid="PQMBnd_a" data-sfc-cb="">Как сделать перенос строки в этом методе<!--TgQPHd||[]--></h2>
+<div style="overflow-wrap: break-word; margin: 16px 0px;" data-sfc-cp="" jsaction="" jscontroller="xUgpab#A1M9vc" data-sfc-root="ep" jsuid="PQMBnd_b" data-sfc-cb="">Если в таком тексте вам нужно будет сделать абзацы, используйте функцию <code dir="ltr" style="background-color: #f4f6f7; border: 1px solid #f4f6f7; border-radius: 4px; padding: 2px 4px;" jsaction="" jscontroller="jM7ape#mDCHfd" data-sfc-root="ep" jsuid="PQMBnd_c" data-sfc-cb="">Символы.ПС<!--TgQPHd||[]--></code>:<!--TgQPHd||[]--></div>
+<div style="background-color: #f4f6f7; padding: 16px; display: flex; gap: 16px; overflow-x: auto" dir="ltr" jsaction="" jscontroller="rxoZB#M4fm4d" data-sfc-root="ep" jsuid="PQMBnd_d" data-sfc-cb=""><pre style="margin-top: 0px; margin-bottom: 0px;"><code class="language-bsl">ВременныйДокумент.Добавить("Первая строка" + Символы.ПС + "Вторая строка");
+</code></pre><!--TgQPHd||[]--></div>
+<h2 style="font-size: 20px;" role="heading" data-sfc-cp="" jsaction="" jscontroller="gjwZNd#ZxCkTb" data-sfc-root="ep" jsuid="PQMBnd_e" data-sfc-cb="">Почему так?<!--TgQPHd||[]--></h2>
+<div style="overflow-wrap: break-word; margin: 16px 0px;" data-sfc-cp="" jsaction="" jscontroller="xUgpab#A1M9vc" data-sfc-root="ep" jsuid="PQMBnd_f" data-sfc-cb="">Объект <code dir="ltr" style="background-color: #f4f6f7; border: 1px solid #f4f6f7; border-radius: 4px; padding: 2px 4px;" jsaction="" jscontroller="jM7ape#mDCHfd" data-sfc-root="ep" jsuid="PQMBnd_g" data-sfc-cb="">ФорматированныйДокумент<!--TgQPHd||[]--></code> внутри устроен сложнее, чем обычная строка. Метод <code dir="ltr" style="background-color: #f4f6f7; border: 1px solid #f4f6f7; border-radius: 4px; padding: 2px 4px;" jsaction="" jscontroller="jM7ape#mDCHfd" data-sfc-root="ep" jsuid="PQMBnd_h" data-sfc-cb="">.Добавить()<!--TgQPHd||[]--></code> берет ваш чистый текст и сам упаковывает его в нужный внутренний формат 1С без использования сторонних языков вроде HTML. Теперь код выполнится без ошибок.<span jsaction="" jscontroller="gWOIub#gnsrYb" data-sfc-root="ep" jsuid="PQMBnd_i" data-sfc-cb=""> [3] <!--TgQPHd||[]--></span><!--TgQPHd||[]--></div>
+<div jsaction="" jscontroller="kVZO2c#SfSkjb" data-sfc-root="ep" jsuid="PQMBnd_j" data-sfc-cb=""><br><div>[1] <a href="https://forum.infostart.ru/forum9/topic176192/">https://forum.infostart.ru</a></div>
+<div>[2] <a href="https://dl03.1c.ru/content/Platform/8_2_19_80/ErrPlatform_8_2_19_80.htm">https://dl03.1c.ru</a></div>
+<div>[3] <a href="https://pro1c.org.ua/index.php?showtopic=7991&amp;mode=linear">https://pro1c.org.ua</a></div><!--TgQPHd||[]--></div>
+<div jsaction="" jscontroller="cU6Yt#LBga0c" data-sfc-root="ep" jsuid="PQMBnd_k" data-sfc-cb=""><!--TgQPHd||[]--></div>
+<div jsaction="" jscontroller="cU6Yt#LBga0c" data-sfc-root="ep" jsuid="PQMBnd_l" data-sfc-cb=""><!--TgQPHd||[]--></div>
+
+
+</body></html>
